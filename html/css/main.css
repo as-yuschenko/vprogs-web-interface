@@ -1,0 +1,53 @@
+	.view_zone
+	{
+		width: 260px;
+		height: 80px;
+		border: solid black 3px;
+		border-radius: 10px; 
+		float: left;
+		margin: 5px;
+		padding: 5px;
+		font-family: "Courier New", monospace;
+		font-weight: normal;
+		font-size: 16px;
+
+	}
+	.ent_name
+	{
+		font-size: 18px;
+		font-weight: 900;
+		margin: 0px;
+		padding: 0px;
+	}
+	.hps_name
+	{
+		font-size: 18px;
+		font-weight: 900;
+		margin: 0px;
+		padding: 0px;
+	}
+	.lps_name
+	{
+		font-size: 16px;
+		font-weight: 100;
+		margin: 0px;
+		padding: 0px;
+	}
+
+
+	.bg_red
+	{
+		background-color: rgba(255,0,0,0.5);
+	}
+	.bg_yellow
+	{
+		background-color: rgba(240,230,140,1);
+	}
+	.bg_green
+	{
+		background-color: rgba(0,255,127,1);
+	}
+	.bg_gray
+	{
+		background-color: rgba(204, 207, 201, 1);
+	}
