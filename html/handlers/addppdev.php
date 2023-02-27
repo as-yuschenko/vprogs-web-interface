@@ -40,7 +40,17 @@ $relayDevOut = 0;
 $relayEntity = 0;
 $currRelayID = 0;
 
+$devAddr = 0;
+$devVer = 0;
+$devTrlt = 0;
+$devAct = 0;
+$currDevID = 0;
+
 $db->exec("BEGIN IMMEDIATE;");
+
+//Curr dev ID
+$result = $db->query("SELECT MAX(id) id from ppDev");
+while ($row = $result->fetchArray(SQLITE3_ASSOC)) $currDevID = $row['id'];
                     
 //Curr part ID
 $result = $db->query("SELECT MAX(id) id from ppPart");
@@ -70,6 +80,83 @@ for ($i=0; true; $i++)
 	//echo '<br>';
 	//echo '<br>';
 	
+	/*Dev version*/
+	if ($i == 2) $devVer = (int)$tok;
+	
+	/*Dev modbus addr*/
+	if ($i == 5) 
+	{
+		$paramNum = 0;
+            $tok = strtok ($tok," "); 
+            while ($tok != NULL)
+            {
+                if (($paramNum == 11))
+                {
+					$devAddr = (int)$tok;  
+                    break;
+                }
+                $tok = strtok (" ");
+                $paramNum++;
+            }
+	}
+	
+	/*Dev translation mode*/
+	if ($i == 6) 
+	{
+		if ($devVer > 200)
+		{
+		$paramNum = 0;
+        $tok = strtok ($tok," "); 
+        while ($tok != NULL)
+        {
+                if (($paramNum == 12))
+                {
+					$devTrlt = ((int)$tok >= 252) ? 1 : 0;  
+                    break;
+                }
+                $tok = strtok (" ");
+                $paramNum++;
+            }
+           }
+	}
+	
+	/*Dev action mode*/
+	if ($i == 7) 
+	{
+		if ($devVer > 200)
+		{
+		$paramNum = 0;
+        $tok = strtok ($tok," "); 
+        while ($tok != NULL)
+        {
+                if (($paramNum == 1))
+                {
+					switch ((int)$tok)
+                        {
+                        case  2 :
+                        case  3 :
+                        case  6 :
+                        case  7 :
+                            $devAct = 1;
+                            break;
+                        case 0:
+                        case 1:
+                        case 4:
+                        case 5:
+                            $devAct = 0;
+                            break;
+                        }
+                        break;
+                }
+                $tok = strtok (" ");
+                $paramNum++;
+            }
+        }
+        
+        $db->exec('INSERT INTO ppDev(id,portID,addr,mode,translt,ver,act,desc)
+		VALUES ('.++$currDevID.',1,'.$devAddr.', 0,'.$devTrlt.','.$devVer.','.$devAct.',"Test");');
+	}
+
 	
 	/*zones*/
         if (($i > 20) && ($i < 101))
@@ -111,10 +198,10 @@ for ($i=0; true; $i++)
 							array_push($partID, ++$currPartID); // add next part id
 							$key = count($partID) - 1;
 							
-							$db->exec("INSERT INTO ppPart (id, ppDevID, num) VALUES ($partID[$key], 1, $partNum[$key]);"); // ppDevID!!!!!
+							$db->exec("INSERT INTO ppPart (id, ppDevID, num) VALUES ($partID[$key],$currDevID, $partNum[$key]);"); // ppDevID!!!!!
 						}
 						$db->exec('INSERT INTO ppZone(id,ppDevID,num,orDev,orDevLoop,ppZoneTypeID,ppPartID)
-						VALUES ('.++$currZoneID.','."1".','.$zoneNum.','.$zoneDevAddr.','.$zoneDevLoop.','.$zoneType.','.$partID[$key].');'); // ppDevID!!!!!
+						VALUES ('.++$currZoneID.','.$currDevID.','.$zoneNum.','.$zoneDevAddr.','.$zoneDevLoop.','.$zoneType.','.$partID[$key].');'); // ppDevID!!!!!
                     
 					}
                     
@@ -154,7 +241,7 @@ for ($i=0; true; $i++)
                     if (($relayDevAddr > 0) && ($relayDevAddr < 128))
 					{
 						$db->exec('INSERT INTO ppRelay(id,ppDevID,num,orDev,orDevRelay)
-						VALUES ('.++$currRelayID.','."1".','.$relayNum.','.$relayDevAddr.','.$relayDevOut.');'); // ppDevID!!!!!
+						VALUES ('.++$currRelayID.','.$currDevID.','.$relayNum.','.$relayDevAddr.','.$relayDevOut.');'); // ppDevID!!!!!
 					}
                  
                     $relayEntity = -1;
