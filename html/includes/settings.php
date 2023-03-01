@@ -131,21 +131,24 @@
 					<form enctype="multipart/form-data" action = "handlers/addppdev.php" method="post">
 						<fieldset>';
 			
-			echo '<p><label for="ppdevcnu">Путь к файлу конфигураии <em>*</em>  </label><input type="file" name="ppdevcnu"></p>';
-			echo '<p><label for="portSpeed">Скорость обмена </label><select name="portSpeed">';
-			echo '<option label = "1200" value = "1200"></option>';
-			echo '<option label = "2400" value = "2400"></option>';
-			echo '<option label = "9600" value = "9600"></option>';
-			echo '<option label = "19200" value = "19200"></option>';
-			echo '<option label = "38400" value = "38400"></option>';
-			echo '<option label = "57600" value = "57600"></option>';
-			echo '<option label = "115200" value = "115200" selected></option>';
+			echo '<p><label for="ppDevCNU">Путь к файлу конфигураии С2000-ПП <em>*</em>  </label><input type="file" name="ppDevCNU"></p>';
+			echo '<p><label for="ppDevTXT">Путь к файлу конфигураии С2000М </label><input type="file" name="ppDevTXT"></p>';
+			
+			echo '<p><label for="ppDevPort">Добавить к порту </label><select name="ppDevPort">';
+			for ($i = 0; $i < count($portsID); $i++)
+			{
+				echo '<option label = "'.$portsID[$i].'" value = "'.$portsID[$i].'"></option>';
+			}
+			
+			
 			echo '</select>';
-			echo '<p><label for="portDesc">Описание </label><input type="text" name="portDesc"></p>';		
+			
+			echo '<p><label for="ppDevWM">Режим работ </label><select name="ppDevWM">';
+			echo '<option label = "Master" value = "1"></option>';
+			echo '<option label = "Slave" value = "0" selected></option>';
+			echo '</select>';
+			echo '<p><label for="ppDevDesc">Описание </label><input type="text" name="ppDevDesc"></p>';		
 			echo '<br>';
-			echo '<p><label for="portDelayTx">Задержка при обмене, мс </label><input type="text" name="portDelayTx" value="50"></p>';	
-			echo '<p><label for="portDelayResp">Ожидание ответа устройства, мс </label><input type="text" name="portDelayResp" value="200"></p>';	
-			echo '<p><label for="portDelayPoll">Пауза между запросами, мс </label><input type="text" name="portDelayPoll" value="50"></p>';	
 			echo '<br>';
 			echo '<input type="submit" value="Добавить!">';
 			echo "		</fieldset>
