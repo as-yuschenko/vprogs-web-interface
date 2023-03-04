@@ -30,4 +30,15 @@ if (socket_connect($socket, $path))
 return -1;
 
 }
+function vardump($var) {
+  echo '<pre>';
+  var_dump($var);
+  echo '</pre>';
+}
+
+function printr($var) {
+  echo '<pre>';
+  print_r($var);
+  echo '</pre>';
+}
 ?>
