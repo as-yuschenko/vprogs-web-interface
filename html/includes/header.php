@@ -30,6 +30,15 @@ define    ("PPDEV_ADD",              2);
 define    ("PPDEV_SHOW_SETTINGS",    3);
 
 
+
+
+define    ("PPDEV_UPDATE_PARTS",    101);
+define    ("PPDEV_UPDATE_ZONES",    102);
+define    ("PPDEV_UPDATE_RELAYS",   103);
+define    ("PPDEV_UPDATE_USERS",    104);
+
+
+
 //telegram
 define    ("BOT_ADD",              1);
 define    ("BOT_RM",          	   2);

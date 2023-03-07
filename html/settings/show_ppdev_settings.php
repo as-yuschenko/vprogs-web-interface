@@ -4,7 +4,7 @@
 echo'
 <br>
 <h3>ZONES</h3>
-<form action = "" method="post">
+<form action = "settings/update_entities_desc.php" method="post">
 <table border=1>
 <tr>
 	<th class="">Номер</td>
@@ -47,7 +47,7 @@ echo'
 		echo("<td>".$row['orDev']."</td>");
 		echo("<td>".$row['orDevLoop']."</td>");
 		
-		echo('<td><input type="text" name="z'.$row['id'].'" value="'.$row['desc'].'"></td>');
+		echo('<td><input type="text" name="'.$row['id'].'" value="'.$row['desc'].'"></td>');
 		
 		echo("<td>".$row['type']."</td>");
 		echo("<td>".$row['partNum']."</td>");
@@ -61,6 +61,7 @@ echo'
 echo '
 </table>
 <br>
+<input type="hidden" name="entityType" value="'.PPDEV_UPDATE_ZONES.'">
 <input type="submit" value="Обновить">
 </form>
 ';
@@ -69,7 +70,7 @@ echo '
 echo'
 <br>
 <h3>PARTS</h3>
-<form action = "settings/update_ppParts_desc.php" method="post">
+<form action = "settings/update_entities_desc.php" method="post">
 <table border=1>
 <tr>
 	<th class="">Номер</td>
@@ -95,6 +96,7 @@ echo'
 echo '
 </table>
 <br>
+<input type="hidden" name="entityType" value="'.PPDEV_UPDATE_PARTS.'">
 <input type="submit" value="Обновить">
 </form>';
 
@@ -103,7 +105,7 @@ echo '
 echo'
 <br>
 <h3>RELAYS</h3>
-<form action = "" method="post">
+<form action = "settings/update_entities_desc.php" method="post">
 <table border=1>
 <tr>
 	<th class="">Номер</td>
@@ -123,7 +125,7 @@ echo'
 		echo("<td>".$row['num']."</td>");
 		echo("<td>".$row['orDev']."</td>");
 		echo("<td>".$row['orDevRelay']."</td>");
-		echo('<td><input type="text" name="r'.$row['id'].'" value="'.$row['desc'].'"></td>');
+		echo('<td><input type="text" name="'.$row['id'].'" value="'.$row['desc'].'"></td>');
 		echo ("</tr>");
 		
 	}
@@ -131,6 +133,7 @@ echo'
 echo '
 </table>
 <br>
+<input type="hidden" name="entityType" value="'.PPDEV_UPDATE_RELAYS.'">
 <input type="submit" value="Обновить">
 </form>
 ';
@@ -140,7 +143,7 @@ echo '
 echo'
 <br>
 <h3>USERS</h3>
-<form action = "" method="post">
+<form action = "settings/update_entities_desc.php" method="post">
 <table border=1>
 <tr>
 	<th class="">Номер</td>
@@ -158,7 +161,7 @@ echo'
 	
 		echo ("<tr>\n");
 		echo("<td>".$row['num']."</td>");	
-		echo('<td><input type="text" name="u'.$row['id'].'" value="'.$row['desc'].'"></td>');
+		echo('<td><input type="text" name="'.$row['id'].'" value="'.$row['desc'].'"></td>');
 		echo ("</tr>");
 		
 	}
@@ -166,6 +169,7 @@ echo'
 echo '
 </table>
 <br>
+<input type="hidden" name="entityType" value="'.PPDEV_UPDATE_USERS.'">
 <input type="submit" value="Обновить">
 </form>';
 
