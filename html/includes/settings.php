@@ -12,11 +12,10 @@
 	<th class="">Путь</td>
 	<th class="">Скорость</td>
 	<th class="">Описание</td>
-	<th class="">Статус</td>
 </tr>
 
 <?php
-	$result = $db->query('SELECT id, path, bRate, `desc`, `state` from port where portTypeID =1');
+	$result = $db->query('SELECT id,path,bRate,desc from port where portTypeID =1');
 	$n = 0;
 	while ($row = $result->fetchArray(SQLITE3_ASSOC)) 
 	{
@@ -24,16 +23,11 @@
 		$n++;
 		
 		//var_dump($row);
-		if ($row['state']) echo ("<tr class=\"bg_green\">\n");
-		else echo ("<tr class=\"bg_red\">\n");
-		
+		echo ("<tr>\n");
 		echo("<td>".$row['id']."</td>");
 		echo("<td>".$row['path']."</td>");
 		echo("<td>".$row['bRate']."</td>");
 		echo("<td>".$row['desc']."</td>");
-		echo("<td>");
-		echo(($row['state']) ? "В работе" : "Не доступен");
-		echo("</td>");
 		echo ("</tr>");
 		
 	}
@@ -48,7 +42,7 @@
 		if ($_GET['do'] == PORT_ADD)
 		{
 			echo '<p>
-					<form action = "handlers/addport.php" method="post">
+					<form action = "settings/add_port.php" method="post">
 						<fieldset>';
 			
 			echo '<p><label for="portAddPath">Путь к файлу порта <em>*</em>  </label><input type="text" name="portAddPath" value="/dev/ttyS0"></p>';
@@ -76,59 +70,14 @@
 ?>
 <br>
 <H3>С2000-ПП<H3>
-	<hr>
-<table border=1>
-<tr>
-	<th class="">Номер</td>
-	<th class="">Порт</td>
-	<th class="">Адрес</td>
-	<th class="">Версия</td>
-	<th class="">Режим</td>
-	<th class="">Прямая трансляция</td>
-	<th class="">Описание</td>
-	<th class="">Статус</td>
-	<th class="">Сущности</td>
-</tr>
-<?php
-	$result = $db->query('SELECT id, portID, addr, mode, translt, ver, state, `desc` FROM ppDev where id>0');
-	while ($row = $result->fetchArray(SQLITE3_ASSOC)) 
-	{
-		//var_dump($row);
-		if ($row['state']) echo ("<tr class=\"bg_green\">\n");
-		else echo ("<tr class=\"bg_red\">\n");
-		echo("<td>$row[id]</td>");
-		echo("<td>$row[portID]</td>");
-		echo("<td>$row[addr]</td>");
-		echo("<td>$row[ver]</td>");
-		echo("<td>");
-		echo(($row['mode']) ? "Ведущий" : "Ведомый");
-		echo("</td>");
-		echo("<td>");
-		echo(($row['translt']) ? "Включена" : "Выключена");
-		echo("</td>");
-		echo("<td>$row[desc]</td>");
-		echo("<td>");
-		echo(($row['state']) ? "В работе" : "Не доступен");
-		echo("</td>");
-		echo("<td>");
-		echo("<a href=\"./index.php?show=zones&dev_id=$row[id]\"> Зоны |</a>" );
-		echo("<a href=\"./index.php?show=parts&dev_id=$row[id]\"> Разделы |</a>" );
-		echo("<a href=\"./index.php?show=relays&dev_id=$row[id]\"> Реле </a>" );
-		echo("</td>");
-		echo ("</tr>");
-		
-	}
-?>
-</table>
-
-<a href="./index.php?show=settings&do=<?php echo PPDEV_ADD;?>">Добавить С2000-ПП</a>
+	<a href="./index.php?show=settings&do=<?php echo PPDEV_ADD;?>">Добавить С2000-ПП</a>
 <?php
 	if (!empty ($_GET['do']))
 	{
 		if ($_GET['do'] == PPDEV_ADD)
 		{
-			echo '<p>
-					<form enctype="multipart/form-data" action = "handlers/addppdev.php" method="post">
+			echo '<div>
+					<form enctype="multipart/form-data" action = "settings/add_ppdev.php" method="post">
 						<fieldset>';
 			
 			echo '<p><label for="ppDevCNU">Путь к файлу конфигураии С2000-ПП <em>*</em>  </label><input type="file" name="ppDevCNU"></p>';
@@ -151,9 +100,55 @@
 			echo '<br>';
 			echo '<br>';
 			echo '<input type="submit" value="Добавить!">';
-			echo "		</fieldset>
+			echo '		</fieldset>
 					</form>
-				  </p>";
+				  </div>';
 		}
 	}
 ?>
+	<hr>
+<table border=1>
+<tr>
+	<th class="">Номер</td>
+	<th class="">Порт</td>
+	<th class="">Адрес</td>
+	<th class="">Версия</td>
+	<th class="">Режим</td>
+	<th class="">Прямая трансляция</td>
+	<th class="">Описание</td>
+	<th class="">Действия</td>
+</tr>
+<?php
+	$result = $db->query('SELECT id, portID, addr, mode, translt, ver, `desc` FROM ppDev where id>0');
+	while ($row = $result->fetchArray(SQLITE3_ASSOC)) 
+	{
+		//var_dump($row);
+		echo ("<tr>\n");
+		echo("<td>$row[id]</td>");
+		echo("<td>$row[portID]</td>");
+		echo("<td>$row[addr]</td>");
+		echo("<td>$row[ver]</td>");
+		echo("<td>");
+		echo(($row['mode']) ? "Ведущий" : "Ведомый");
+		echo("</td>");
+		echo("<td>");
+		echo(($row['translt']) ? "Включена" : "Выключена");
+		echo("</td>");
+		echo("<td>$row[desc]</td>");
+		echo("<td>");
+		echo('<a href="./index.php?show=settings&do='.PPDEV_SHOW_SETTINGS.'&id='.$row['id'].'"> Показать |</a>' );
+		echo("<a href=\"./index.php?show=parts&dev_id=$row[id]\"> Удалить </a>" );
+		echo("</td>");
+		echo ("</tr>");
+		
+	}
+?>
+</table>
+
+<?php
+	if (!empty ($_GET['do']))
+		if (($_GET['do'] == PPDEV_SHOW_SETTINGS) && ($_GET['id'] > 0))
+			include ('settings/show_ppdev_settings.php');
+		
+?>
+

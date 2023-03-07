@@ -27,6 +27,7 @@ define    ("ETYPE_TEMP",           6);
 //settings
 define    ("PORT_ADD",              1);
 define    ("PPDEV_ADD",              2);
+define    ("PPDEV_SHOW_SETTINGS",    3);
 
 
 //telegram

@@ -1,4 +1,5 @@
 <?php
+require ("./db/db_settings.php");
 require ("./includes/header.php");
 require ("./includes/functions.php");
 ?>
@@ -21,7 +22,7 @@ require ("./includes/functions.php");
 
 
 <?php
-	$db = new SQLite3('/valrond/cpp/_bases/develop.sqlite', SQLITE3_OPEN_READWRITE);
+	$db = new SQLite3($db_path, SQLITE3_OPEN_READWRITE);
 	
 	/*
 	while ($row = $result->fetchArray()) 

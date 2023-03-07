@@ -1,6 +1,7 @@
 <?php
+	require ("../db/db_settings.php");
 //var_dump($_POST);
-$db = new SQLite3('/valrond/cpp/_bases/develop.sqlite', SQLITE3_OPEN_READWRITE);
+$db = new SQLite3($db_path, SQLITE3_OPEN_READWRITE);
 
 $errCode = 0;
 
