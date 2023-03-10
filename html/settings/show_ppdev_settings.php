@@ -7,15 +7,16 @@ echo'
 <form action = "settings/update_entities_desc.php" method="post">
 <table border=1>
 <tr>
-	<th class="">Номер</td>
-	<th class="">Адрес прибора</td>
-	<th class="">Номер шлейфа</td>
-	<th class="">Описание</td>
-	<th class="">Тип шлейфа</td>
-	<th class="">Номер раздела ПП</td>
-	<th class="">Описание раздела ПП</td>
-	<th class="">Номер раздела С2000М</td>
-	<th class="">Описание раздела С2000М</td>
+	<th class="">Номер</th>
+	<th class="">Адрес прибора</th>
+	<th class="">Номер шлейфа</th>
+	<th class="">Описание</th>
+	<th class="">На главной</th>
+	<th class="">Тип шлейфа</th>
+	<th class="">Номер раздела ПП</th>
+	<th class="">Описание раздела ПП</th>
+	<th class="">Номер раздела С2000М</th>
+	<th class="">Описание раздела С2000М</th>
 </tr>
 ';
 
@@ -27,6 +28,7 @@ echo'
 	,ppZone.orDevLoop
 	,ppZone.desc
 	,ppZoneType.desc `type`
+	,ppZone.mainScreen
 	,ppPart.num `partNum`
 	,ppPart.desc `partDesc`
 	,orPart.num `opartNum`
@@ -46,9 +48,13 @@ echo'
 		echo("<td>".$row['num']."</td>");
 		echo("<td>".$row['orDev']."</td>");
 		echo("<td>".$row['orDevLoop']."</td>");
-		
-		echo('<td><input type="text" name="'.$row['id'].'" value="'.$row['desc'].'"></td>');
-		
+		/*	Form parsing
+		 * Prefix [d] is zone descritpion  
+		 * Prefix [s] is view zone on start page  
+		 * */
+		echo('<td><input type="text" name="d'.$row['id'].'" value="'.$row['desc'].'"></td>');
+		echo('<td><input type="checkbox" name = "s'.$row['id'].'"'.(($row['mainScreen'])? " checked" :"").'></td>');
+
 		echo("<td>".$row['type']."</td>");
 		echo("<td>".$row['partNum']."</td>");
 		echo("<td>".$row['partDesc']."</td>");
@@ -62,6 +68,7 @@ echo '
 </table>
 <br>
 <input type="hidden" name="entityType" value="'.PPDEV_UPDATE_ZONES.'">
+<input type="hidden" name="ppDevID" value="'.$_GET['id'].'">
 <input type="submit" value="Обновить">
 </form>
 ';
@@ -73,13 +80,14 @@ echo'
 <form action = "settings/update_entities_desc.php" method="post">
 <table border=1>
 <tr>
-	<th class="">Номер</td>
-	<th class="">Описание</td>
+	<th class="">Номер</th>
+	<th class="">Описание</th>
+	<th class="">На главной</th>
 
 </tr>
 ';
 
-	$result = $db->query('Select id,num,desc from ppPart where ppDevID ='.$_GET['id']);
+	$result = $db->query('Select id,num,desc,mainScreen from ppPart where ppDevID ='.$_GET['id']);
 
 
 	while ($row = $result->fetchArray(SQLITE3_ASSOC)) 
@@ -88,7 +96,8 @@ echo'
 	
 		echo ("<tr>\n");
 		echo("<td>".$row['num']."</td>");	
-		echo('<td><input type="text" name="'.$row['id'].'" value="'.$row['desc'].'"</td>');
+		echo('<td><input type="text" name="d'.$row['id'].'" value="'.$row['desc'].'"</td>');
+		echo('<td><input type="checkbox" name = "s'.$row['id'].'"'.(($row['mainScreen'])? " checked" :"").'></td>');
 		echo ("</tr>");
 		
 	}
@@ -97,6 +106,7 @@ echo '
 </table>
 <br>
 <input type="hidden" name="entityType" value="'.PPDEV_UPDATE_PARTS.'">
+<input type="hidden" name="ppDevID" value="'.$_GET['id'].'">
 <input type="submit" value="Обновить">
 </form>';
 
@@ -108,14 +118,15 @@ echo'
 <form action = "settings/update_entities_desc.php" method="post">
 <table border=1>
 <tr>
-	<th class="">Номер</td>
-	<th class="">Адрес прибора</td>
-	<th class="">Номер выХода</td>
-	<th class="">Описание</td>
+	<th class="">Номер</th>
+	<th class="">Адрес прибора</th>
+	<th class="">Номер выХода</th>
+	<th class="">Описание</th>
+	<th class="">На главной</th>
 </tr>
 ';
 
-	$result = $db->query('Select id,num,orDev,orDevRelay,desc from ppRelay where ppDevID ='.$_GET['id']);
+	$result = $db->query('Select id,num,orDev,orDevRelay,desc,mainScreen from ppRelay where ppDevID ='.$_GET['id']);
 
 	while ($row = $result->fetchArray(SQLITE3_ASSOC)) 
 	{
@@ -125,7 +136,8 @@ echo'
 		echo("<td>".$row['num']."</td>");
 		echo("<td>".$row['orDev']."</td>");
 		echo("<td>".$row['orDevRelay']."</td>");
-		echo('<td><input type="text" name="'.$row['id'].'" value="'.$row['desc'].'"></td>');
+		echo('<td><input type="text" name="d'.$row['id'].'" value="'.$row['desc'].'"></td>');
+		echo('<td><input type="checkbox" name = "s'.$row['id'].'"'.(($row['mainScreen'])? " checked" :"").'></td>');
 		echo ("</tr>");
 		
 	}
@@ -134,6 +146,7 @@ echo '
 </table>
 <br>
 <input type="hidden" name="entityType" value="'.PPDEV_UPDATE_RELAYS.'">
+<input type="hidden" name="ppDevID" value="'.$_GET['id'].'">
 <input type="submit" value="Обновить">
 </form>
 ';
@@ -146,8 +159,8 @@ echo'
 <form action = "settings/update_entities_desc.php" method="post">
 <table border=1>
 <tr>
-	<th class="">Номер</td>
-	<th class="">Описание</td>
+	<th class="">Номер</th>
+	<th class="">Описание</th>
 
 </tr>
 ';
@@ -161,7 +174,7 @@ echo'
 	
 		echo ("<tr>\n");
 		echo("<td>".$row['num']."</td>");	
-		echo('<td><input type="text" name="'.$row['id'].'" value="'.$row['desc'].'"></td>');
+		echo('<td><input type="text" name="d'.$row['id'].'" value="'.$row['desc'].'"></td>');
 		echo ("</tr>");
 		
 	}
@@ -170,6 +183,7 @@ echo '
 </table>
 <br>
 <input type="hidden" name="entityType" value="'.PPDEV_UPDATE_USERS.'">
+<input type="hidden" name="ppDevID" value="'.$_GET['id'].'">
 <input type="submit" value="Обновить">
 </form>';
 
@@ -180,8 +194,8 @@ echo'
 <h3>ORION PARTS</h3>
 <table border=1>
 <tr>
-	<th class="">Номер</td>
-	<th class="">Описание</td>
+	<th class="">Номер</th>
+	<th class="">Описание</th>
 
 </tr>
 ';
@@ -240,4 +254,16 @@ echo '
 </table>
 <br>
 ';
+
+/*REMOVE ppDev*/
+echo'
+<hr>
+<p align = "center">
+<form action = "settings/rm_ppdev.php" method="post">
+<input type="hidden" name="ppDevID" value="'.$_GET['id'].'">
+<input type="submit" value="Удалить устройство">
+</form>
+</p>
+'
+;
 ?>

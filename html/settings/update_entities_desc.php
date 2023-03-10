@@ -3,12 +3,32 @@
 	require ("../includes/header.php");
 	include('../includes/functions.php');
 	
-	printr ($_POST);
+	function htmlOut ($ppDevID, $err)
+	{
+		echo'
+		<html>
+		<head>
+		<title>Обрабытываем...</title>
+		<meta http-equiv="refresh" content="'.(($err)? "2" : "0" ).'; URL=../?show=settings&do='.PPDEV_SHOW_SETTINGS.'&id='.$ppDevID.'">
+		 </head>
+		 <body>';
+				if ($err)
+				{
+					echo 'Ошибка!<br>Не удалось внести обновлени.<br>Код ошибки:'.$err.'.<br>Перенаправление.';
+				}
+			  
+			echo'			
+		  </body>
+		</html>';
+		return 0;
+	}
+	
+	//printr ($_POST);
 	
 
-	
-	$err = 0;
 	$entName = '';
+	
+	$ppDevID = (int)$_POST['ppDevID'];
 	
 	
 	
@@ -27,62 +47,85 @@
 			$entName ='ppUser';
 		break;
 		default:
-			$err = -1;
+			htmlOut ($ppDevID, -1);
+			exit();
 		break;	
 	}
 	
-	if (!$err)
+	
+	$db = new SQLite3($db_path, SQLITE3_OPEN_READWRITE);
+	$db->enableExceptions(true);
+		
+	$db->exec("BEGIN IMMEDIATE;");
+		
+	//drop mainscreen flags & prepare mainscreen query
+	if ($_POST['entityType'] != PPDEV_UPDATE_USERS)
 	{
-		unset ($_POST['entityType']);
+		$stmt_mScr = $db->prepare('UPDATE '.$entName.' SET mainScreen = 1 where id=:id');
 		
-		$db = new SQLite3($db_path, SQLITE3_OPEN_READWRITE);
-		$db->enableExceptions(true);
-		
-		$db->exec("BEGIN IMMEDIATE;");
-		$stmt = $db->prepare('UPDATE '.$entName.' SET desc=:desc where id=:id');
-		
-		foreach ($_POST as $id => $desc )
+		try
 		{
-			if ($err) break;
-			
-			$stmt->bindValue(':id', (int)$id, SQLITE3_INTEGER);
-			$stmt->bindValue(':desc', $desc, SQLITE3_TEXT);
+			$db->exec('UPDATE '.$entName.' SET mainScreen = 0');
+		}
+		catch (Exception $e) 
+		{
+			$db->exec("ROLLBACK;");
+			htmlOut ($ppDevID, $db->lastErrorCode());
+			exit();
+		}
+	}
+		
+		
+	//prepare desc query
+	$stmt_desc = $db->prepare('UPDATE '.$entName.' SET desc=:desc where id=:id');
+
+	unset ($_POST['entityType']);
+	unset ($_POST['ppDevID']);
+	
+	
+	
+	foreach ($_POST as $key => $val )
+	{			
+		if ($key[0] == 'd') // set desc
+		{
+			$stmt_desc->bindValue(':id', ((int)substr($key, 1)), SQLITE3_INTEGER);
+			$stmt_desc->bindValue(':desc', $val , SQLITE3_TEXT);
 			try
 			{
-				$stmt->execute();
+				$stmt_desc->execute();
 			}
 			catch (Exception $e) 
 			{
 				$db->exec("ROLLBACK;");
-				$err = $db->lastErrorCode();
+				htmlOut ($ppDevID, $db->lastErrorCode());
+				exit();
 			}
-			$stmt->reset();
+			$stmt_desc->reset();
+			continue;
 		}
-		
-		if (!$err)$db->exec("COMMIT;");
+		if ($key[0] == 's') // set mainscreen flags 
+		{
+			$stmt_mScr->bindValue(':id', ((int)substr($key, 1)), SQLITE3_INTEGER);
+			try
+			{
+				$stmt_mScr->execute();
+			}
+			catch (Exception $e) 
+			{
+				$db->exec("ROLLBACK;");
+				htmlOut ($ppDevID, $db->lastErrorCode());
+				exit();	
+			}
+				$stmt_desc->reset();
+		}
 	}
+		
+	$db->exec("COMMIT;");
+	htmlOut ($ppDevID, 0);
 	
-	echo'
-	<html>
-	<head>
-    <title>Обрабытываем...</title>
-	<meta http-equiv="refresh" content="2; URL=../?show=settings">
-	 </head>
-	 <body>';
-			if (!$err)
-			{
-				echo 'Обновлени внесен.';
-			}
-			else 
-			{
-				echo 'Ошибка!<br>Не удалось внести обновлени.<br>Код ошибки:'.$err.'.';
-			}
-		  
-		echo'	
-		<br>
-		Перенаправление.
-	  </body>
-	</html>';
+
+	
+
 	
 	
 ?>

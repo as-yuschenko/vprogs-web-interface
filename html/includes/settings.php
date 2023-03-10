@@ -109,14 +109,14 @@
 	<hr>
 <table border=1>
 <tr>
-	<th class="">Номер</td>
-	<th class="">Порт</td>
-	<th class="">Адрес</td>
-	<th class="">Версия</td>
-	<th class="">Режим</td>
-	<th class="">Прямая трансляция</td>
-	<th class="">Описание</td>
-	<th class="">Действия</td>
+	<th class="">Номер</th>
+	<th class="">Порт</th>
+	<th class="">Адрес</th>
+	<th class="">Версия</th>
+	<th class="">Режим</th>
+	<th class="">Прямая трансляция</th>
+	<th class="">Описание</th>
+	<th class="">Действия</th>
 </tr>
 <?php
 	$result = $db->query('SELECT id, portID, addr, mode, translt, ver, `desc` FROM ppDev where id>0');
@@ -136,8 +136,7 @@
 		echo("</td>");
 		echo("<td>$row[desc]</td>");
 		echo("<td>");
-		echo('<a href="./index.php?show=settings&do='.PPDEV_SHOW_SETTINGS.'&id='.$row['id'].'"> Показать |</a>' );
-		echo("<a href=\"./index.php?show=parts&dev_id=$row[id]\"> Удалить </a>" );
+		echo('<a href="./index.php?show=settings&do='.PPDEV_SHOW_SETTINGS.'&id='.$row['id'].'"> Настройки </a>' );
 		echo("</td>");
 		echo ("</tr>");
 		

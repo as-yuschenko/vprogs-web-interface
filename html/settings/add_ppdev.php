@@ -2,6 +2,26 @@
 require ("../db/db_settings.php");
 include ("../includes/functions.php");
 
+function htmlOut ($err)
+	{
+		echo'
+		<html>
+		<head>
+		<title>Обрабытываем...</title>
+		<meta http-equiv="refresh" content="'.(($err)? "2" : "0" ).'; URL=../?show=settings">
+		 </head>
+		 <body>';
+				if ($err)
+				{
+					echo 'Ошибка!<br>Не удалось добавить устройство.<br>Код ошибки:'.$err.'.<br>Перенаправление.';
+				}
+			  
+			echo'			
+		  </body>
+		</html>';
+		return 0;
+	}
+
 /*S2000-PP entities*/
 class Dev
 {
@@ -135,7 +155,7 @@ else
     die ('Error!<br>No information about cnu file received');
 }
 echo '<br>';
-var_dump ($_FILES['ppDevCNU']);
+//var_dump ($_FILES['ppDevCNU']);
 $f = fopen($_FILES['ppDevCNU']['tmp_name'], "r");
 
 
@@ -691,8 +711,6 @@ catch (Exception $e)
 	}
 }
 
-echo '<h4>Устройство с адресом '.$ppDev->mbAddr.' привзано к порту '.$_POST['ppDevPort'].' и добавлено в систему.</h4>';
-
 /*INSERT ppParts*/
 $stmt = $db->prepare('INSERT INTO ppPart(id, ppDevID, num) VALUES (:id, :ppDevID, :num)');
 foreach ($arrParts as $p)
@@ -828,9 +846,10 @@ if (!empty ($arrOrUsers))
 		$stmt->reset();
 	}
 }
+htmlOut (0);
 $db->exec("COMMIT;");
 
-
+/*
 echo "<h1>DEV</h1>";
 printr($ppDev);
 echo "<h1>PARTS</h1>";
@@ -854,7 +873,7 @@ printr($arrOrRelays);
 echo '<h1>ORION USERS</h1>';
 printr($arrOrUsers);
 echo '<br>END';
-
+*/
 
 
 ?>
