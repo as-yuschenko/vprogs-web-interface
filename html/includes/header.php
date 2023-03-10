@@ -26,7 +26,7 @@ define    ("ETYPE_TEMP",           6);
 
 //settings
 define    ("PORT_ADD",              1);
-define    ("PORT_RM",              2);
+define    ("PORT_SHOW_SETTINGS",    2);
 define    ("PPDEV_ADD",              3);
 define    ("PPDEV_SHOW_SETTINGS",    4);
 

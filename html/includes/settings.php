@@ -8,10 +8,11 @@
 
 <table border=1>
 <tr>
-	<th class="">Порт</td>
-	<th class="">Путь</td>
-	<th class="">Скорость</td>
-	<th class="">Описание</td>
+	<th class="">Порт</th>
+	<th class="">Путь</th>
+	<th class="">Скорость</th>
+	<th class="">Описание</th>
+	<th class="">Действия</th>
 </tr>
 
 <?php
@@ -28,6 +29,7 @@
 		echo("<td>".$row['path']."</td>");
 		echo("<td>".$row['bRate']."</td>");
 		echo("<td>".$row['desc']."</td>");
+		echo('<td><a href="./index.php?show=settings&do='.PORT_SHOW_SETTINGS.'&id='.$row['id'].'"> Настройки </a></td>' );
 		echo ("</tr>");
 		
 	}
@@ -41,12 +43,9 @@
 	{
 		if ($_GET['do'] == PORT_ADD)
 		{
-			echo '<p>
-					<form action = "settings/add_port.php" method="post">
-						<fieldset>';
-			
-			echo '<p><label for="portAddPath">Путь к файлу порта <em>*</em>  </label><input type="text" name="portAddPath" value="/dev/ttyS0"></p>';
-			echo '<p><label for="portSpeed">Скорость обмена </label><select name="portSpeed">';
+			echo '<p><form action = "settings/add_port.php" method="post"><table>';
+			echo '<tr><td>Путь к файлу порта </td><td><input type="text" name="portAddPath" value="/dev/ttyS0"></td></tr>';
+			echo '<tr><td>Скорость обмена </td><td><select name="portSpeed">';
 			echo '<option label = "1200" value = "1200"></option>';
 			echo '<option label = "2400" value = "2400"></option>';
 			echo '<option label = "9600" value = "9600"></option>';
@@ -54,17 +53,14 @@
 			echo '<option label = "38400" value = "38400"></option>';
 			echo '<option label = "57600" value = "57600"></option>';
 			echo '<option label = "115200" value = "115200" selected></option>';
-			echo '</select>';
-			echo '<p><label for="portDesc">Описание </label><input type="text" name="portDesc"></p>';		
-			echo '<br>';
-			echo '<p><label for="portDelayTx">Задержка при обмене, мс </label><input type="text" name="portDelayTx" value="50"></p>';	
-			echo '<p><label for="portDelayResp">Ожидание ответа устройства, мс </label><input type="text" name="portDelayResp" value="200"></p>';	
-			echo '<p><label for="portDelayPoll">Пауза между запросами, мс </label><input type="text" name="portDelayPoll" value="50"></p>';	
-			echo '<br>';
-			echo '<input type="submit" value="Добавить!">';
-			echo "		</fieldset>
-					</form>
-				  </p>";
+			echo '</select></td></tr>';
+			echo '<tr><td>Описание </td><td><input type="text" name="portDesc"></td></tr>';		
+			echo '<tr><td>Без неободимости не изменйте нижеследуюие настройки</td></tr>';
+			echo '<tr><td>Задержка при обмене, мс </td><td><input type="text" name="portDelayTx" value="50"></td></tr>';	
+			echo '<tr><td>Ожидание ответа устройства, мс </td><td><input type="text" name="portDelayResp" value="200"></td></tr>';	
+			echo '<tr><td>Пауза между запросами, мс </td><td><input type="text" name="portDelayPoll" value="50"></td></tr>';	
+			echo '<tr><td><br><input type="submit" value="Добавить!"></td></tr>';
+			echo '</table></form></p>';
 		}
 	}
 ?>
