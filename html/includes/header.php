@@ -26,18 +26,11 @@ define    ("ETYPE_TEMP",           6);
 
 //settings
 define    ("PORT_ADD",              1);
-define    ("PORT_SHOW_SETTINGS",    2);
+define    ("PORT_SHOW",    2);
 define    ("PPDEV_ADD",              3);
-define    ("PPDEV_SHOW_SETTINGS",    4);
+define    ("PPDEV_SHOW",    4);
 
 
-
-
-
-define    ("PPDEV_UPDATE_PARTS",    101);
-define    ("PPDEV_UPDATE_ZONES",    102);
-define    ("PPDEV_UPDATE_RELAYS",   103);
-define    ("PPDEV_UPDATE_USERS",    104);
 
 
 

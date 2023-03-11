@@ -1,3 +1,12 @@
+	.form_add_entity
+	{
+		border: solid grey 1px;
+		border-radius: 10px; 
+		padding: 5px;
+		margin: 10px;
+		width: 35%;
+	}
+	
 	.view_zone
 	{
 		width: 260px;

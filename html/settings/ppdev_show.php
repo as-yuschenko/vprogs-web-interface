@@ -1,10 +1,35 @@
 <?php
+/*DEV*/
+$result = $db->query('select portID,addr,mode,translt,ver,desc from ppDev where id = '.$_GET['id']);
+$row = $result->fetchArray(SQLITE3_ASSOC);
+
+echo '<h3>С2000-ПП</h3>
+<form action = "settings/ppdev_update.php" method="post">
+<table border=1>
+
+	<tr><td>Адрес</td><td><input type="text" name="addr" value="'.$row['addr'].'"></td></tr>
+	<tr><td>Номер порта</td><td><input type="text" name="portID" value="'.$row['portID'].'"></td></tr>
+	<tr><td>Режим работ</td><td><select name="mode">
+							<option label = "Master" value = "1" '.(((int)$row['mode'] == 1) ? "selected" : "").'></option>
+							<option label = "Slave" value = "0" '.(((int)$row['mode'] == 0) ? "selected" : "").'></option>
+							</select></td></tr>
+	<tr><td>Прма трансли</td><td><select name="translt">
+							<option label = "ON" value = "1" '.(((int)$row['translt'] == 1) ? "selected" : "").'></option>
+							<option label = "OFF" value = "0" '.(((int)$row['translt'] == 0) ? "selected" : "").'></option>
+							</select></td></tr>
+	<tr><td>Верси</td><td><input type="text" name="ver" value="'.$row['ver'].'"></td></tr>
+	<tr><td>Описание</td><td><input type="text" name="desc" value="'.$row['desc'].'"></td></tr>
+</table>
+<br>
+<input type="hidden" name="ppDevID" value="'.$_GET['id'].'">
+<input type="submit" value="Обновить">
+</form>';
 
 /*ZONES*/
 echo'
 <br>
 <h3>ZONES</h3>
-<form action = "settings/update_entities_desc.php" method="post">
+<form action = "settings/zone_update.php" method="post">
 <table border=1>
 <tr>
 	<th class="">Номер</th>
@@ -67,7 +92,6 @@ echo'
 echo '
 </table>
 <br>
-<input type="hidden" name="entityType" value="'.PPDEV_UPDATE_ZONES.'">
 <input type="hidden" name="ppDevID" value="'.$_GET['id'].'">
 <input type="submit" value="Обновить">
 </form>
@@ -77,7 +101,7 @@ echo '
 echo'
 <br>
 <h3>PARTS</h3>
-<form action = "settings/update_entities_desc.php" method="post">
+<form action = "settings/part_update.php" method="post">
 <table border=1>
 <tr>
 	<th class="">Номер</th>
@@ -105,7 +129,6 @@ echo'
 echo '
 </table>
 <br>
-<input type="hidden" name="entityType" value="'.PPDEV_UPDATE_PARTS.'">
 <input type="hidden" name="ppDevID" value="'.$_GET['id'].'">
 <input type="submit" value="Обновить">
 </form>';
@@ -115,7 +138,7 @@ echo '
 echo'
 <br>
 <h3>RELAYS</h3>
-<form action = "settings/update_entities_desc.php" method="post">
+<form action = "settings/relay_update.php" method="post">
 <table border=1>
 <tr>
 	<th class="">Номер</th>
@@ -145,7 +168,6 @@ echo'
 echo '
 </table>
 <br>
-<input type="hidden" name="entityType" value="'.PPDEV_UPDATE_RELAYS.'">
 <input type="hidden" name="ppDevID" value="'.$_GET['id'].'">
 <input type="submit" value="Обновить">
 </form>
@@ -156,7 +178,7 @@ echo '
 echo'
 <br>
 <h3>USERS</h3>
-<form action = "settings/update_entities_desc.php" method="post">
+<form action = "settings/user_update.php" method="post">
 <table border=1>
 <tr>
 	<th class="">Номер</th>
@@ -182,7 +204,6 @@ echo'
 echo '
 </table>
 <br>
-<input type="hidden" name="entityType" value="'.PPDEV_UPDATE_USERS.'">
 <input type="hidden" name="ppDevID" value="'.$_GET['id'].'">
 <input type="submit" value="Обновить">
 </form>';
@@ -259,7 +280,7 @@ echo '
 echo'
 <hr>
 <p align = "center">
-<form action = "settings/rm_ppdev.php" method="post">
+<form action = "settings/ppdev_rm.php" method="post">
 <input type="hidden" name="ppDevID" value="'.$_GET['id'].'">
 <input type="submit" value="Удалить устройство">
 </form>
