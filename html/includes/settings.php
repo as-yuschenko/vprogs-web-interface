@@ -11,7 +11,7 @@
 		if ($_GET['do'] == PORT_ADD)
 		{
 			echo '<div class = "form_add_entity"><form action = "settings/port_add.php" method="post"><table>';
-			echo '<tr><td>Путь к файлу порта </td><td><input type="text" name="portAddPath" value="/dev/ttyS0"></td></tr>';
+			echo '<tr><td class = "bottom_line">Путь к файлу порта </td><td><input type="text" name="portAddPath" value="/dev/ttyS0"></td></tr>';
 			/*
 			echo '<tr><td>Скорость обмена </td><td><select name="portSpeed">';
 			echo '<option label = "1200" value = "1200"></option>';
@@ -23,7 +23,7 @@
 			echo '<option label = "115200" value = "115200" selected></option>';
 			echo '</select></td></tr>';
 			*/
-			echo '<tr><td>Скорость обмена </td><td>';
+			echo '<tr><td class = "bottom_line">Скорость обмена </td><td>';
 			echo'<input name="portSpeed" type="radio" value="1200">1200<br>';
 			echo'<input name="portSpeed" type="radio" value="2400">2400<br>';
 			echo'<input name="portSpeed" type="radio" value="9600">9600<br>';
@@ -32,11 +32,11 @@
 			echo'<input name="portSpeed" type="radio" value="57600">57600<br>';
 			echo'<input name="portSpeed" type="radio" value="115200" checked>115200<br>';
 			echo '</td></tr>';
-			echo '<tr><td>Описание </td><td><input type="text" name="portDesc"></td></tr>';		
-			echo '<tr><td>Без неободимости не изменйте нижеследуюие настройки</td></tr>';
-			echo '<tr><td>Задержка при обмене, мс </td><td><input type="text" name="portDelayTx" value="50"></td></tr>';	
-			echo '<tr><td>Ожидание ответа устройства, мс </td><td><input type="text" name="portDelayResp" value="200"></td></tr>';	
-			echo '<tr><td>Пауза между запросами, мс </td><td><input type="text" name="portDelayPoll" value="50"></td></tr>';	
+			echo '<tr><td class = "bottom_line">Описание </td><td><input type="text" name="portDesc"></td></tr>';		
+			echo '<tr><td><br><h4>Без неободимости не изменйте нижеследуюие настройки</h4></td></tr>';
+			echo '<tr><td class = "bottom_line">Задержка при обмене, мс </td><td><input type="text" name="portDelayTx" value="50"></td></tr>';	
+			echo '<tr><td class = "bottom_line">Ожидание ответа устройства, мс </td><td><input type="text" name="portDelayResp" value="200"></td></tr>';	
+			echo '<tr><td class = "bottom_line">Пауза между запросами, мс </td><td><input type="text" name="portDelayPoll" value="50"></td></tr>';	
 			echo '<tr><td></td><td><br><input type="submit" value="Добавить!"></td></tr>';
 			echo '</table></form></div>';
 		}
@@ -84,20 +84,20 @@
 		if ($_GET['do'] == PPDEV_ADD)
 		{
 			echo '<div class = "form_add_entity"><form enctype="multipart/form-data" action = "settings/ppdev_add.php" method="post"><table>';
-			echo '<tr><td>Путь к файлу конфигураии С2000-ПП <em>*</em></td><td><input type="file" name="ppDevCNU"></td></tr>';
-			echo '<tr><td>Путь к файлу конфигураии С2000М </td><td><input type="file" name="ppDevTXT"></td></tr>';
-			echo '<tr><td>Добавить к порту </td><td>';
+			echo '<tr><td class = "bottom_line">Путь к файлу конфигураии С2000-ПП <em>*</em></td><td><input type="file" name="ppDevCNU"></td></tr>';
+			echo '<tr><td class = "bottom_line">Путь к файлу конфигураии С2000М </td><td><input type="file" name="ppDevTXT"></td></tr>';
+			echo '<tr><td class = "bottom_line">Добавить к порту </td><td>';
 			for ($i = 0; $i < count($portsID); $i++)
 			{
 				echo '<input name="ppDevPort" type="radio" value="'.$portsID[$i].'">'.$portsID[$i].'<br>';
 		
 			}
 			echo '</td></tr>';
-			echo '<tr><td>Режим работ </td><td>';
+			echo '<tr><td class = "bottom_line">Режим работ </td><td>';
 			echo '<input name="ppDevWM" type="radio" value="1" >Master<br>';
 			echo '<input name="ppDevWM" type="radio" value="0" checked>Slave<br>';
 			echo '</td></tr>';
-			echo '<tr><td>Описание </td><td><input type="text" name="ppDevDesc"></td></tr>';		
+			echo '<tr><td class = "bottom_line">Описание </td><td><input type="text" name="ppDevDesc"></td></tr>';		
 			echo '<tr><td></td><td><br><input type="submit" value="Добавить!"></td></tr>';		
 			echo '</table></form></div>';
 		}

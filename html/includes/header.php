@@ -29,6 +29,11 @@ define    ("PORT_ADD",              1);
 define    ("PORT_SHOW",    2);
 define    ("PPDEV_ADD",              3);
 define    ("PPDEV_SHOW",    4);
+define    ("PPZONE_ADD",    5);
+define    ("PPPART_ADD",    6);
+define    ("PPREALY_ADD",    7);
+define    ("PPUSER_ADD",    8);
+
 
 
 

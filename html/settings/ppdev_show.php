@@ -9,14 +9,14 @@ echo '<h3>С2000-ПП</h3>
 
 	<tr><td>Адрес</td><td><input type="text" name="addr" value="'.$row['addr'].'"></td></tr>
 	<tr><td>Номер порта</td><td><input type="text" name="portID" value="'.$row['portID'].'"></td></tr>
-	<tr><td>Режим работ</td><td><select name="mode">
-							<option label = "Master" value = "1" '.(((int)$row['mode'] == 1) ? "selected" : "").'></option>
-							<option label = "Slave" value = "0" '.(((int)$row['mode'] == 0) ? "selected" : "").'></option>
-							</select></td></tr>
-	<tr><td>Прма трансли</td><td><select name="translt">
-							<option label = "ON" value = "1" '.(((int)$row['translt'] == 1) ? "selected" : "").'></option>
-							<option label = "OFF" value = "0" '.(((int)$row['translt'] == 0) ? "selected" : "").'></option>
-							</select></td></tr>
+	<tr><td>Режим работ</td><td>
+							<input name="mode" type="radio" value="1" '.(((int)$row['mode'] == 1) ? "checked" : "").'>Master<br>
+							<input name="mode" type="radio" value="0" '.(((int)$row['mode'] == 0) ? "checked" : "").'>Slave<br>
+							</td></tr>
+	<tr><td>Прма трансли</td><td>
+							<input name="translt" type="radio" value="1" '.(((int)$row['translt'] == 1) ? "checked" : "").'>ON<br>
+							<input name="translt" type="radio" value="0" '.(((int)$row['translt'] == 0) ? "checked" : "").'>OFF<br>
+							</td></tr>
 	<tr><td>Верси</td><td><input type="text" name="ver" value="'.$row['ver'].'"></td></tr>
 	<tr><td>Описание</td><td><input type="text" name="desc" value="'.$row['desc'].'"></td></tr>
 </table>
@@ -28,7 +28,9 @@ echo '<h3>С2000-ПП</h3>
 /*ZONES*/
 echo'
 <br>
-<h3>ZONES</h3>
+<p><b>ZONES</b></p>
+
+<a href = "./?show=settings&do='.PPZONE_ADD.'&id='.$_GET['id'].'">Добавить зону</a>
 <form action = "settings/zone_update.php" method="post">
 <table border=1>
 <tr>
@@ -100,7 +102,9 @@ echo '
 /*PARTS*/
 echo'
 <br>
-<h3>PARTS</h3>
+<p><b>PARTS</b></p>
+
+<a href = "./?show=settings&do='.PPPART_ADD.'&id='.$_GET['id'].'">Добавить раздел</a>
 <form action = "settings/part_update.php" method="post">
 <table border=1>
 <tr>
@@ -137,7 +141,9 @@ echo '
 /*RELAYS*/
 echo'
 <br>
-<h3>RELAYS</h3>
+<p><b>RELAYS</b></p>
+
+<a href = "./?show=settings&do='.PPREALY_ADD.'&id='.$_GET['id'].'">Добавить реле</a>
 <form action = "settings/relay_update.php" method="post">
 <table border=1>
 <tr>
@@ -177,7 +183,9 @@ echo '
 /*USERS*/
 echo'
 <br>
-<h3>USERS</h3>
+<p><b>USERS</b></p>
+
+<a href = "./?show=settings&do='.PPUSER_ADD.'&id='.$_GET['id'].'">Добавить юзера</a>
 <form action = "settings/user_update.php" method="post">
 <table border=1>
 <tr>

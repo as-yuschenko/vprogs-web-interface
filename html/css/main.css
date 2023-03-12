@@ -7,6 +7,11 @@
 		/*width: 35%;*/
 	}
 	
+	.bottom_line
+	{
+		border-bottom: 1px solid rgba(204, 207, 201, 1);
+	}
+	
 	.view_zone
 	{
 		width: 260px;
