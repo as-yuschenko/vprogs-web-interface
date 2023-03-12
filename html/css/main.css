@@ -1,9 +1,11 @@
 	.form_add_entity
 	{
+		display : table;
 		border: solid grey 1px;
 		border-radius: 10px; 
 		padding: 5px;
-		margin: 10px;
+		margin-top: 10px;
+		margin-bottom: 10px;
 		/*width: 35%;*/
 	}
 	
