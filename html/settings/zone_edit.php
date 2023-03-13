@@ -1,18 +1,16 @@
-<?php 
+<?php
 echo'
 <form action = "settings/zone_update.php" method="post">
 <table border=1>
 <tr>
 	<th class="">Номер</th>
-	<th class="">Адрес прибора</th>
-	<th class="">Номер шлейфа</th>
+	<th class="">Прибор</th>
+	<th class="">ШС</th>
 	<th class="">Описание</th>
 	<th class="">На главной</th>
 	<th class="">Тип шлейфа</th>
-	<th class="">Номер раздела ПП</th>
-	<th class="">Описание раздела ПП</th>
-	<th class="">Номер раздела С2000М</th>
-	<th class="">Описание раздела С2000М</th>
+	<th class="">Раздел ПП</th>
+	<th class="">Раздел С2000М</th>
 </tr>
 ';
 
@@ -27,8 +25,8 @@ echo'
 	,ppZone.mainScreen
 	,ppPart.num `partNum`
 	,ppPart.desc `partDesc`
-	,orPart.num `opartNum`
-	,orPart.desc `opartDesc`
+	,orPart.num `orPartNum`
+	,orPart.desc `orPartDesc`
 	from ppZone
 	left join ppZoneType on ppZone.ppZoneTypeID = ppZoneType.id
 	left join ppPart on ppZone.ppPartID = ppPart.id
@@ -52,10 +50,8 @@ echo'
 		echo('<td><input type="checkbox" name = "s'.$row['id'].'"'.(($row['mainScreen'])? " checked" :"").'></td>');
 
 		echo("<td>".$row['type']."</td>");
-		echo("<td>".$row['partNum']."</td>");
-		echo("<td>".$row['partDesc']."</td>");
-		echo("<td>".$row['opartNum']."</td>");
-		echo("<td>".$row['opartDesc']."</td>");
+		echo('<td>'.$row['partNum'].'&nbsp;-&nbsp;'.$row['partDesc'].'</td>');
+		echo('<td>'.(($row['orPartNum'] > 0) ? $row['orPartNum'].'&nbsp;-&nbsp;'.$row['orPartDesc'].'' : '').'</td>');
 		echo ("</tr>");
 		
 	}

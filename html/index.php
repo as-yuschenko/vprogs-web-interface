@@ -23,6 +23,8 @@ require ("./includes/functions.php");
 
 <?php
 	$db = new SQLite3($db_path, SQLITE3_OPEN_READWRITE);
+	$db->exec('PRAGMA foreign_keys = ON;');	
+	$db->enableExceptions(true);
 	
 	/*
 	while ($row = $result->fetchArray()) 

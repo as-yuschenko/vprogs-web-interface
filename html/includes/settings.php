@@ -83,23 +83,7 @@
 	{
 		if ($_GET['do'] == PPDEV_ADD)
 		{
-			echo '<div class = "form_add_entity"><form enctype="multipart/form-data" action = "settings/ppdev_add.php" method="post"><table>';
-			echo '<tr><td class = "bottom_line">Путь к файлу конфигураии С2000-ПП <em>*</em></td><td><input type="file" name="ppDevCNU"></td></tr>';
-			echo '<tr><td class = "bottom_line">Путь к файлу конфигураии С2000М </td><td><input type="file" name="ppDevTXT"></td></tr>';
-			echo '<tr><td class = "bottom_line">Добавить к порту </td><td>';
-			for ($i = 0; $i < count($portsID); $i++)
-			{
-				echo '<input name="ppDevPort" type="radio" value="'.$portsID[$i].'">'.$portsID[$i].'<br>';
-		
-			}
-			echo '</td></tr>';
-			echo '<tr><td class = "bottom_line">Режим работ </td><td>';
-			echo '<input name="ppDevWM" type="radio" value="1" >Master<br>';
-			echo '<input name="ppDevWM" type="radio" value="0" checked>Slave<br>';
-			echo '</td></tr>';
-			echo '<tr><td class = "bottom_line">Описание </td><td><input type="text" name="ppDevDesc"></td></tr>';		
-			echo '<tr><td></td><td><br><input type="submit" value="Добавить!"></td></tr>';		
-			echo '</table></form></div>';
+			include ('settings/ppdev_add_form.php');
 		}
 	}
 ?>
